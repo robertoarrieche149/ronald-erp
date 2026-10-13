@@ -1,0 +1,267 @@
+@import "tailwindcss";
+
+
+/* =============================================
+   DESIGN TOKENS — Minimarket POS
+   ============================================= */
+@layer base {
+  :root {
+    --orange-50: #fff7ed;
+    --orange-100: #ffedd5;
+    --orange-200: #fed7aa;
+    --orange-400: #fb923c;
+    --orange-500: #f97316;
+    --orange-600: #ea580c;
+    --orange-700: #c2410c;
+
+    /* Light Theme */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --bg-tertiary: #f3f4f6;
+    --bg-card: #ffffff;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    --border: #e5e7eb;
+    --border-strong: #d1d5db;
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+
+  .dark {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+    --bg-card: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --border: #334155;
+    --border-strong: #475569;
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4);
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+    min-height: 100dvh;
+    overscroll-behavior: none;
+  }
+
+  #root {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* =============================================
+   UTILITY CLASSES
+   ============================================= */
+@layer utilities {
+  .bg-app { background-color: var(--bg-primary); }
+  .bg-surface { background-color: var(--bg-secondary); }
+  .bg-card { background-color: var(--bg-card); }
+  .bg-muted { background-color: var(--bg-tertiary); }
+
+  .text-app { color: var(--text-primary); }
+  .text-sub { color: var(--text-secondary); }
+  .text-muted { color: var(--text-muted); }
+
+  .border-app { border-color: var(--border); }
+  .border-strong { border-color: var(--border-strong); }
+
+  .shadow-app { box-shadow: var(--shadow); }
+  .shadow-app-md { box-shadow: var(--shadow-md); }
+  .shadow-app-lg { box-shadow: var(--shadow-lg); }
+
+  /* Scroll suave en móvil */
+  .scroll-mobile {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+
+  /* Safe area para notch/home indicator */
+  .pb-safe { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+  .pt-safe { padding-top: max(1rem, env(safe-area-inset-top)); }
+  .h-bottom-nav { height: calc(4rem + env(safe-area-inset-bottom)); }
+
+  /* Animaciones */
+  .fade-in {
+    animation: fadeIn 0.2s ease-out;
+  }
+  .slide-up {
+    animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .scale-in {
+    animation: scaleIn 0.15s ease-out;
+  }
+  .bounce-in {
+    animation: bounceIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes bounceIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* =============================================
+   COMPONENTS
+   ============================================= */
+@layer components {
+  /* Botón primario — naranja */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background: linear-gradient(135deg, var(--orange-500), var(--orange-600));
+    color: white;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    border-radius: 0.875rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 4px 12px rgb(249 115 22 / 0.35);
+    -webkit-user-select: none;
+    user-select: none;
+    min-height: 3rem;
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgb(249 115 22 / 0.45); }
+  .btn-primary:active { transform: translateY(0) scale(0.97); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  /* Botón secundario */
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    border-radius: 0.875rem;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    min-height: 3rem;
+  }
+  .btn-secondary:hover { background-color: var(--border); }
+  .btn-secondary:active { transform: scale(0.97); }
+  .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* Botón ghost/peligro */
+  .btn-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background-color: #fee2e2;
+    color: #dc2626;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    border-radius: 0.875rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    min-height: 3rem;
+  }
+  .btn-danger:hover { background-color: #fecaca; }
+  .btn-danger:active { transform: scale(0.97); }
+  .dark .btn-danger { background-color: rgb(220 38 38 / 0.2); color: #f87171; }
+
+  /* Card base */
+  .card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+  }
+
+  /* Input */
+  .input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-secondary);
+    border: 1.5px solid var(--border);
+    border-radius: 0.75rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    outline: none;
+    min-height: 3rem;
+  }
+  .input:focus {
+    border-color: var(--orange-500);
+    box-shadow: 0 0 0 3px rgb(249 115 22 / 0.15);
+  }
+  .input::placeholder { color: var(--text-muted); }
+
+  /* Badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .badge-orange { background-color: var(--orange-100); color: var(--orange-700); }
+  .badge-green { background-color: #dcfce7; color: #15803d; }
+  .badge-red { background-color: #fee2e2; color: #dc2626; }
+  .badge-gray { background-color: var(--bg-tertiary); color: var(--text-secondary); }
+  .dark .badge-orange { background-color: rgb(249 115 22 / 0.2); color: var(--orange-400); }
+  .dark .badge-green { background-color: rgb(21 128 61 / 0.2); color: #4ade80; }
+  .dark .badge-red { background-color: rgb(220 38 38 / 0.2); color: #f87171; }
+
+  /* Skeleton loader */
+  .skeleton {
+    background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--border) 50%, var(--bg-tertiary) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 0.5rem;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
